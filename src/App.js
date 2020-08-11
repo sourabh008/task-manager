@@ -3,7 +3,7 @@ import './App.css';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import {Button} from '@material-ui/core'
-
+import Edit from"./Edit"
 
 function App() {
  const [text,setText]=useState("");
@@ -20,8 +20,23 @@ const submit1=()=>{
   setText("");
   setTime("");
   setDate("");
+}
+const updateList= (text,date,time,orignalTime)=>{
+  const newlink=data.map(list=>{
+    if(list.time===orignalTime){
+        list.text=text;
+       list.date=date;
+        list.time=time;
+    }
+    return list;
+    // console.log("data")
+
+  })
+  setData(newlink);
 
   console.log(data);
+
+
 }
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,9 +52,7 @@ const classes = useStyles();
     
 
     <div className="App">
-       <form className={classes.root} noValidate autoComplete="off">
-        {/* <TextField required id="standard-required" label="Required" defaultValue="Hello World" />
-        <TextField disabled id="standard-disabled" label="Disabled" defaultValue="Hello World" /> */}
+       <form className={classes.root} noValidate autoComplete="off"> 
         <TextField
           id="standard-password-input"
           label="Meating Title"
@@ -80,34 +93,41 @@ const classes = useStyles();
     inputProps={{
       step: 300, // 5 min
     }}
-  />
-{/* </form>      <form >
+  />      
+    </form>
+    <div className="button"> <Button  type="submit" onClick={submit1} variant="contained" color="primary">
+        Add Meating
+      </Button></div>        
+       
+        {data.map(data1=>{
+          return(
+            <Edit text={data1.text} date={data1.date} time={data1.time} onUpdate={updateList}/>
+          )
+        //  <li key={data1.time} >
+
+           {/* {data1.text}        {data1.time}         {data1.date} <Button   onClick={()=>updateList} variant="contained" color="primary">
+         update
+       </Button> */}
+      //  </li>      
+          
+        })}
+        
+        {/* {isEdit?    <form >
       <input  value={text} type="text" onChange={(e)=>{
          setText(e.target.value);
         }}/>
       <input type="date" value={date}  onChange={(e)=>{
          setDate(e.target.value);
         }}/>
-      <input type="time" value={time}onChange={(e)=>{
+      <input type="time" value={time} onChange={(e)=>{
          setTime(e.target.value);
         }}/>
-        </form> */}
+          <Button   variant="contained" color="primary">
+        submit
+      </Button>
+        </form>
       
-    </form>
-    <div className="button"> <Button  type="submit" onClick={submit1} variant="contained" color="primary">
-        Add Meating
-      </Button></div>
-   
-    {/* <button type="submit" onClick={submit1}>add meeting</button> */}
-        
-       <ol>
-        {data.map(data1=>{
-          return(
-         <li>{data1.text}        {data1.time}         {data1.date}</li> 
-         
-          )
-        })}
-        </ol>
+      :""} */}
     </div>
   );
 }
